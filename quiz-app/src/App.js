@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box'
 
 function Question(props) {
-  return <div>
+  return <Box>
     {props.text}
     {props.answers.map(a => 
-      <button>{a}</button>)
+      <Button>{a}</Button>)
     }
-  </div>
+  </Box>
 }
 
 function App() {
