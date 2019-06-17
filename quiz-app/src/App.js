@@ -25,19 +25,20 @@ class Question extends React.Component {
   render() {
     const that = this;
     return <Container maxWidth='sm' justify='center'>
-    {this.props.text}
-    <br/>
-    {this.props.answers.map((a, index) => {
-      const color = that.state.selectedAnswer === a.id ? 'primary' : 'default';
-      const clickCallback = (event) => that.onAnswerClick(event, a.id);
-      return <Button color={color} key={index} onClick={clickCallback}>{a.text}</Button>
-    })}
-  </Container>  }
+      {this.props.text}
+      <br/>
+      {this.props.answers.map((a, index) => {
+        const color = that.state.selectedAnswer === a.id ? 'primary' : 'default';
+        const clickCallback = (event) => that.onAnswerClick(event, a.id);
+        return <Button color={color} key={index} onClick={clickCallback}>{a.text}</Button>
+      })}
+    </Container>  
+  }
 }
 
 function Quiz(props) {
   const questions = props.questions.map((q, index) => 
-    <Question text={q.text} answers={q.answers} key={index}
+    <Question text={q.text} answers={q.answers} key={index} id={q.id}
     onAnswerCallback={(questionID, AnswerID) => console.log("Q:" + questionID + ", Answer: " +  AnswerID)}
     />
   )
@@ -63,6 +64,15 @@ function App() {
       answers: [
         {id: 0, text: 'To be'},
         {id: 1, text: 'Not to be'}
+      ]
+    },
+    {
+      id: 2,
+      text: 'Who killed Mufasa?',
+      answers: [
+        {id: 0, text: 'Simba'},
+        {id: 1, text: 'Kiara'},
+        {id: 2, text: 'Scar'}
       ]
     }
   ]
