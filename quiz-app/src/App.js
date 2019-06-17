@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box'
+import Container from '@material-ui/core/Container'
 
 function Question(props) {
-  return <Box>
+  return <Container maxWidth='sm' justify='center'>
     {props.text}
-    {props.answers.map(a => 
-      <Button>{a}</Button>)
+    <br/>
+    {props.answers.map((a, index) => 
+      <Button key={index}>{a}</Button>)
     }
-  </Box>
+  </Container>
 }
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   ];
 
   return (
-    <Question text='foo bar baz?' answers={answers} />
+    <Question text='foo bar or baz?' answers={answers} />
   );
 }
 
