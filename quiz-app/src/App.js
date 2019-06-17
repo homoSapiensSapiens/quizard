@@ -23,7 +23,6 @@ class Question extends React.Component {
   render() {
     const {selectedAnswer} = this.state;
     const {answers} = this.props;
-    const that = this;
     return <Container maxWidth='sm' justify='center'>
       {this.props.text}
       <br />
