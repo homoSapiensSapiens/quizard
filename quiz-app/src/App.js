@@ -13,13 +13,29 @@ function Question(props) {
   </Container>
 }
 
+function Quiz(props) {
+  const questions = props.questions.map((q, index) => 
+    <Question text={q.text} answers={q.answers} key={index}/>
+  )
+  return <Container color='green'>
+    {questions}
+  </Container>
+}
+
 function App() {
-  const answers = [
-    'foo', 'bar', 'baz'
-  ];
+  const quiz =  [
+    {
+      text: 'Foo bar baz?',
+      answers: ['foo', 'bar', 'baz']
+    }, 
+    {
+      text: 'What is better?',
+      answers: ['To be', 'Not to be']
+    }
+  ]
 
   return (
-    <Question text='foo bar or baz?' answers={answers} />
+    <Quiz questions={quiz} />
   );
 }
 
