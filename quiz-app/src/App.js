@@ -15,7 +15,7 @@ class Question extends React.Component {
     this.setState({
       selectedAnswer: answerId
     })
-    if (this.onAnswerCallback) {
+    if (this.props.onAnswerCallback) {
       this.props.onAnswerCallback(this.props.id, answerId);
     }
   }
@@ -38,15 +38,63 @@ class Question extends React.Component {
 }
 
 class Quiz extends React.Component {
+  constructor(props) {
+    super(props);
+    const questionsIDs = props.questions.map(q => q.id);
+    this.state = {
+      'answers': questionsIDs.reduce((o, k) => {o[k] = -1; return o}, {})
+    }
+  }
+
+  handleAnswer = (questionID, answerID) => {
+    const { onQuizCompletion } = this.props;
+    var {answers} = this.state;
+    answers[questionID] = answerID;
+    this.setState( {answers} )
+    if (Object.keys(answers).every(i => answers[i] !== -1)) {
+      console.log('Completed quiz');
+      if (onQuizCompletion) {
+        onQuizCompletion(answers)
+      }
+    }
+  }
+
   render() {
     const questions = this.props.questions.map((q, index) =>
       <Question text={q.text} answers={q.answers} key={index} id={q.id}
-        onAnswerCallback={(questionID, AnswerID) => console.log("Q:" + questionID + ", Answer: " + AnswerID)}
+        onAnswerCallback={this.handleAnswer}
       />
     )
     return <Container color='green'>
       {questions}
     </Container>
+  }
+}
+
+class QuizSession extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      phase: 'quiz',
+      quizResult: null
+    }
+  }
+
+  handleQuizCompleted = (answers) => {
+    this.setState({
+      phase: 'results',
+      quizResult: Object.keys(answers).join(' ')
+    })
+  }
+
+  render() {
+    const { phase, quizResult } = this.state;
+    return phase === 'quiz' ?
+      <Quiz 
+        onQuizCompletion={this.handleQuizCompleted}
+        {...this.props}
+      /> :
+      <h1>Finished: {quizResult}</h1>;
   }
 }
 
@@ -81,7 +129,7 @@ function App() {
   ]
 
   return (
-    <Quiz questions={quiz} />
+      <QuizSession questions={quiz} />
   );
 }
 
