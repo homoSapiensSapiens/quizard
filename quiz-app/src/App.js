@@ -130,28 +130,28 @@ function App() {
   const quiz = [
     {
       id: 0,
-      text: 'Foo bar baz?',
+      text: 'What is your favorite color?',
       answers: [
-        { id: 0, text: 'foo' },
-        { id: 1, text: 'bar' },
-        { id: 2, text: 'baz' }
+        { id: 0, text: 'Red' },
+        { id: 1, text: 'Green' },
+        { id: 2, text: 'Also green but circle' }
       ]
     },
     {
       id: 1,
-      text: 'What is better?',
+      text: 'Do you like tea?',
       answers: [
-        { id: 0, text: 'To be' },
-        { id: 1, text: 'Not to be' }
+        { id: 0, text: 'Yes, sure!' },
+        { id: 1, text: 'Nah, not for me' }
       ]
     },
     {
       id: 2,
-      text: 'Who killed Mufasa?',
+      text: 'How strong and hard are you?',
       answers: [
-        { id: 0, text: 'Simba' },
-        { id: 1, text: 'Kiara' },
-        { id: 2, text: 'Scar' }
+        { id: 0, text: 'Very strong' },
+        { id: 1, text: 'Normal' },
+        { id: 2, text: 'Pretty weak actually' }
       ]
     }
   ];
@@ -173,18 +173,18 @@ function App() {
     '0': {
       '0': { resultId: 0, operator: '+', operand: 1 },
       '1': { resultId: 1, operator: '+', operand: 1 },
-      '2': { resultId: 1, operator: '+', operand: 1 }
+      '2': { resultId: 0, operator: '+', operand: 0.5 }
     },
 
     '1': {
-      '0': { resultId: 0, operator: '+', operand: 3 },
-      '1': { resultId: 1, operator: '-', operand: -1 }
+      '0': { resultId: 0, operator: '+', operand: 2 },
+      '1': { resultId: 0, operator: '-', operand: -1 }
     },
 
     '2': {
-      '0': { resultId: 0, operator: '+', operand: 1 },
-      '1': { resultId: 1, operator: '-', operand: 2 },
-      '2': { resultId: 1, operator: '+', operand: 1 }
+      '0': { resultId: 1, operator: '+', operand: 1 },
+      '1': { resultId: 1, operator: '-', operand: 0.5 },
+      '2': { resultId: 0, operator: '+', operand: 1 }
     }
   }
 
