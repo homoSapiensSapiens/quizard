@@ -32,6 +32,7 @@ class Question extends React.Component {
   }
 
   render() {
+    // TODO: Allow images
     const {selectedAnswer} = this.state;
     const {answers} = this.props;
     return <Container maxWidth='sm' justify='center'>
@@ -64,7 +65,6 @@ class Quiz extends React.Component {
     answers[questionID] = answerID;
     this.setState( {answers} )
     if (Object.keys(answers).every(i => answers[i] !== -1)) {
-      console.log('Completed quiz');
       if (onQuizCompletion) {
         onQuizCompletion(answers)
       }
@@ -129,12 +129,13 @@ class QuizSession extends React.Component {
 
   render() {
     const { phase, quizResult } = this.state;
-    return phase === 'quiz' ?
+    return <div>
       <Quiz 
         onQuizCompletion={this.handleQuizCompleted}
         {...this.props}
-      /> :
-      <h1>Result: {quizResult}</h1>;
+      />
+      {phase === 'results' && <h1 align='center'>Result: {quizResult}</h1>}
+    </div>
   }
 }
 
