@@ -80,10 +80,38 @@ class QuizSession extends React.Component {
     }
   }
 
+  operationLambdas = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b
+  }
+
   handleQuizCompleted = (answers) => {
+    const { results, effects } = this.props;
+    console.log(results);
+    const idToResultText = results.reduce((agg, { id, text }) => {
+      agg[id] = text;
+      return agg;
+    }, {})
+    var idToScore = {};
+
+    // TODO: answers should be an array of question + answer?
+    for (var questionID in answers) {
+      const answerID = answers[questionID];
+      // TODO: enable multiple effects
+      const { resultId, operator, operand } = effects[questionID][answerID];
+      const oldScore = idToScore[resultId] || 0;
+      const operation = this.operationLambdas[operator];
+      idToScore[resultId] = operation(oldScore, operand);
+    }
+    
+    const bestResultId = Object.keys(idToScore).reduce(
+      (resultId, currentMax) => idToScore[resultId] > idToScore[currentMax] ? resultId : currentMax);
+    
+    const bestResultText = idToResultText[bestResultId];
+
     this.setState({
       phase: 'results',
-      quizResult: Object.keys(answers).join(' ')
+      quizResult: bestResultText
     })
   }
 
@@ -94,7 +122,7 @@ class QuizSession extends React.Component {
         onQuizCompletion={this.handleQuizCompleted}
         {...this.props}
       /> :
-      <h1>Finished: {quizResult}</h1>;
+      <h1>Result: {quizResult}</h1>;
   }
 }
 
@@ -126,10 +154,46 @@ function App() {
         { id: 2, text: 'Scar' }
       ]
     }
-  ]
+  ];
+
+  // TODO: indicative strings as id
+  const results = [
+    {
+      id: 0,
+      text: 'Apple'
+    },
+    {
+      id: 1,
+      text: 'Pear'
+    }
+  ];
+
+  // This need to be text/numbers, so it can be received from server
+  const effects = {
+    '0': {
+      '0': { resultId: 0, operator: '+', operand: 1 },
+      '1': { resultId: 1, operator: '+', operand: 1 },
+      '2': { resultId: 1, operator: '+', operand: 1 }
+    },
+
+    '1': {
+      '0': { resultId: 0, operator: '+', operand: 3 },
+      '1': { resultId: 1, operator: '-', operand: -1 }
+    },
+
+    '2': {
+      '0': { resultId: 0, operator: '+', operand: 1 },
+      '1': { resultId: 1, operator: '-', operand: 2 },
+      '2': { resultId: 1, operator: '+', operand: 1 }
+    }
+  }
 
   return (
-      <QuizSession questions={quiz} />
+      <QuizSession
+        questions={quiz}
+        results={results}
+        effects={effects}
+      />
   );
 }
 
