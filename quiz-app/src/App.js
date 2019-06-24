@@ -1,7 +1,18 @@
 import React from 'react';
-import './App.css';
+
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container'
+import { withStyles } from '@material-ui/core/styles';
+
+import './App.css';
+
+const AnswerButton = withStyles({
+  root: {
+    textTransform: 'none',
+    margin: '2px',
+  },
+})(Button);
+
 
 class Question extends React.Component {
   constructor(props) {
@@ -27,11 +38,12 @@ class Question extends React.Component {
       {this.props.text}
       <br />
       {answers.map(({id, text}) =>
-        <Button 
+        <AnswerButton 
+          variant= {selectedAnswer === id ? 'contained' : 'outlined'} 
           key={id} 
           color={selectedAnswer === id ? 'primary' : 'default'} 
           onClick={event => this.onAnswerClick(event, id)}
-        >{text}</Button>
+        >{text}</AnswerButton>
       )}
     </Container>
   }
