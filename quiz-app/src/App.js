@@ -147,7 +147,7 @@ function App() {
     },
     {
       id: 2,
-      text: 'How strong and hard are you?',
+      text: 'How strong are you?',
       answers: [
         { id: 0, text: 'Very strong' },
         { id: 1, text: 'Normal' },
