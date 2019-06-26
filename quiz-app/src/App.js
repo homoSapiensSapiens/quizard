@@ -83,6 +83,14 @@ class Quiz extends React.Component {
   }
 }
 
+function QuizResult(props) {
+  const { title, description } = props.result;
+  return <div>
+    <h1 align='center'>Result: {title}</h1>
+    <p align='center'>{description}</p>
+  </div>
+}
+
 class QuizSession extends React.Component {
   constructor(props) {
     super(props);
@@ -100,8 +108,8 @@ class QuizSession extends React.Component {
   handleQuizCompleted = (answers) => {
     const { results, effects } = this.props;
     console.log(results);
-    const idToResultText = results.reduce((agg, { id, text }) => {
-      agg[id] = text;
+    const idToResulObject = results.reduce((agg, result) => {
+      agg[result.id] = result;
       return agg;
     }, {})
     var idToScore = {};
@@ -119,11 +127,11 @@ class QuizSession extends React.Component {
     const bestResultId = Object.keys(idToScore).reduce(
       (resultId, currentMax) => idToScore[resultId] > idToScore[currentMax] ? resultId : currentMax);
     
-    const bestResultText = idToResultText[bestResultId];
+    const bestResult = idToResulObject[bestResultId];
 
     this.setState({
       phase: 'results',
-      quizResult: bestResultText
+      quizResult: bestResult
     })
   }
 
@@ -134,7 +142,7 @@ class QuizSession extends React.Component {
         onQuizCompletion={this.handleQuizCompleted}
         {...this.props}
       />
-      {phase === 'results' && <h1 align='center'>Result: {quizResult}</h1>}
+      {phase === 'results' && <QuizResult result={ quizResult }/>}
     </div>
   }
 }
@@ -173,11 +181,13 @@ function App() {
   const results = [
     {
       id: 0,
-      text: 'Apple'
+      title: 'Apple',
+      description: 'You are a tasty piece of fruit, and can be proud of yourself'
     },
     {
       id: 1,
-      text: 'Pear'
+      title: 'Pear',
+      description: 'A pear is a nice and beutiful fruit'
     }
   ];
 
