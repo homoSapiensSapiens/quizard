@@ -107,7 +107,6 @@ class QuizSession extends React.Component {
 
   handleQuizCompleted = (answers) => {
     const { results, effects } = this.props;
-    console.log(results);
     const idToResulObject = results.reduce((agg, result) => {
       agg[result.id] = result;
       return agg;
