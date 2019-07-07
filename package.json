@@ -1,0 +1,25 @@
+{
+  "name": "quizard",
+  "version": "0.1.0",
+  "description": "Quiz app server side",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/homoSapiensSapiens/quizard.git"
+  },
+  "keywords": [
+    "quiz"
+  ],
+  "author": "Reuven Peleg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/homoSapiensSapiens/quizard/issues"
+  },
+  "homepage": "https://github.com/homoSapiensSapiens/quizard#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
