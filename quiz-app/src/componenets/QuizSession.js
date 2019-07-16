@@ -16,41 +16,30 @@ class QuizSession extends React.Component {
   }
 
   handleQuizCompleted = (answers) => {
-    const { results, effects } = this.props;
-    const idToResulObject = results.reduce((agg, result) => {
-      agg[result.id] = result;
-      return agg;
-    }, {})
-    var idToScore = {};
-
-    // TODO: answers should be an array of question + answer?
-    for (var questionID in answers) {
-      const answerID = answers[questionID];
-      // TODO: enable multiple effects
-      const { resultId, operator, operand } = effects[questionID][answerID];
-      const oldScore = idToScore[resultId] || 0;
-      const operation = this.operationLambdas[operator];
-      idToScore[resultId] = operation(oldScore, operand);
-    }
-
-    const bestResultId = Object.keys(idToScore).reduce(
-      (resultId, currentMax) => idToScore[resultId] > idToScore[currentMax] ? resultId : currentMax);
-
-    const bestResult = idToResulObject[bestResultId];
-
-    this.setState({
-      phase: 'results',
-      quizResult: bestResult
-    })
+    const {quizId} = this.props;
+    // TODO: Loading indicator?
+    fetch(`/api/result/${quizId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({answers})})
+        .then(response => response.json())
+        .then(bestResult => this.setState({
+          phase: 'results',
+          quizResult: bestResult
+        }));
   }
 
   render() {
     const { phase, quizResult } = this.state;
     const { quizElement } = this.props;
-    return <div>
+    console.log(quizResult);
+    return <>
       {quizElement(this.handleQuizCompleted)}
       {phase === 'results' && <QuizResult result={quizResult} />}
-    </div>
+    </>
   }
 }
 
