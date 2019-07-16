@@ -2,36 +2,9 @@ import React from 'react'
 
 import './App.css'
 import QuizSession from './componenets/QuizSession'
+import RemoteFetchingQuiz from './componenets/RemoteFetchingQuiz';
 
 function App() {
-  const quiz = [
-    {
-      id: 0,
-      text: 'What is your favorite color?',
-      answers: [
-        { id: 0, text: 'Red' },
-        { id: 1, text: 'Green' },
-        { id: 2, text: 'Also green but circle' }
-      ]
-    },
-    {
-      id: 1,
-      text: 'Do you like tea?',
-      answers: [
-        { id: 0, text: 'Yes, sure!' },
-        { id: 1, text: 'Nah, not for me' }
-      ]
-    },
-    {
-      id: 2,
-      text: 'How strong are you?',
-      answers: [
-        { id: 0, text: 'Very strong' },
-        { id: 1, text: 'Normal' },
-        { id: 2, text: 'Pretty weak actually' }
-      ]
-    }
-  ];
 
   // TODO: indicative strings as id
   const results = [
@@ -69,7 +42,11 @@ function App() {
 
   return (
       <QuizSession
-        questions={quiz}
+        quizElement={(onQuizCompletion) =>
+          <RemoteFetchingQuiz
+            url='/api/quiz/0'
+            onQuizCompletion={onQuizCompletion}/>
+          }
         results={results}
         effects={effects}
       />

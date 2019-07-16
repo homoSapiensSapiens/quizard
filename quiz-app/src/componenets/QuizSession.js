@@ -1,5 +1,4 @@
 import React from 'react'
-import Quiz from './Quiz'
 import QuizResult from './QuizResult'
 
 class QuizSession extends React.Component {
@@ -47,11 +46,9 @@ class QuizSession extends React.Component {
 
   render() {
     const { phase, quizResult } = this.state;
+    const { quizElement } = this.props;
     return <div>
-      <Quiz
-        onQuizCompletion={this.handleQuizCompleted}
-        {...this.props}
-      />
+      {quizElement(this.handleQuizCompleted)}
       {phase === 'results' && <QuizResult result={quizResult} />}
     </div>
   }

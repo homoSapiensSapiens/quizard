@@ -19,6 +19,8 @@ class Quiz extends React.Component {
     if (Object.keys(answers).every(i => answers[i] !== -1)) {
       if (onQuizCompletion) {
         onQuizCompletion(answers)
+      } else {
+        console.warn('No onQuizCompletion callback');
       }
     }
   }
