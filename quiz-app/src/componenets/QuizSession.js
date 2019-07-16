@@ -35,7 +35,6 @@ class QuizSession extends React.Component {
   render() {
     const { phase, quizResult } = this.state;
     const { quizElement } = this.props;
-    console.log(quizResult);
     return <>
       {quizElement(this.handleQuizCompleted)}
       {phase === 'results' && <QuizResult result={quizResult} />}

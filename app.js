@@ -100,8 +100,6 @@ app.post('/api/result/:quizId', (req, res) => {
   }, {})
   var idToScore = {};
 
-  console.log(answers);
-
   // TODO: answers should be an array of question + answer?
   for (var questionID in answers) {
     const answerID = answers[questionID];
