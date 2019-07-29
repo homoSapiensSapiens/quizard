@@ -1,10 +1,9 @@
+const functions = require('firebase-functions');
 const express = require('express');
-const path = require('path');
+const app = express();
 const bodyParser = require('body-parser');
 
-const app = express();
 
-app.use('/static', express.static(path.join(__dirname, 'quiz-app', 'build', 'static')));
 app.use(bodyParser.json());
 
 const quiz = [
@@ -75,14 +74,23 @@ const effects = {
   }
 }
 
+app.get('/api/quiz', (req, res) => {
+  res.status(200).send([
+    {
+      quizID: 0,
+      title: 'Fruits Quiz',
+      description: 'Take now a quiz and find out what fruit are you'
+    }
+  ]);
+})
 
 app.get('/api/quiz/:quizId', (req, res) => {
   const { quizId } = req.params;
   if (quizId === '0') {
-    res.send(quiz);
+    res.status(200).send(quiz);
   } else {
-    res.status(404);
-    res.send({error: 'Quiz was not found'});
+    res.status(404)
+      .send({error: 'Quiz was not found'});
   }
 })
 
@@ -117,8 +125,4 @@ app.post('/api/result/:quizId', (req, res) => {
   res.send(bestResult);
 })
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'quiz-app', 'build', 'index.html'));
-});
-
-app.listen(9000);
+exports.restApi = functions.https.onRequest(app);
