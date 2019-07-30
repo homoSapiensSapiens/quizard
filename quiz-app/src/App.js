@@ -1,5 +1,7 @@
 import React from 'react'
-import Firebase from 'firebase'
+
+import * as firebase from "firebase/app";
+import "firebase/performance";
 
 import './App.css'
 import AppBar from '@material-ui/core/AppBar';
@@ -22,7 +24,7 @@ class App extends React.Component {
       messagingSenderId: "723737407305",
       appId: "1:723737407305:web:8874949cdd186353"
     };
-    Firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
   }
 
   render() {
