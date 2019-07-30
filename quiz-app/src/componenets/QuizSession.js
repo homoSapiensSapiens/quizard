@@ -1,6 +1,6 @@
 import React from 'react'
 import QuizResult from './QuizResult'
-import { Link, Button } from '@material-ui/core';
+import { Link, Button, CircularProgress } from '@material-ui/core';
 
 class QuizSession extends React.Component {
   constructor(props) {
@@ -18,19 +18,24 @@ class QuizSession extends React.Component {
 
   handleQuizCompleted = (answers) => {
     const {quizId} = this.props;
-    // TODO: Loading indicator?
-    fetch(`/api/result/${quizId}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({answers})})
-        .then(response => response.json())
-        .then(bestResult => this.setState({
-          phase: 'results',
-          quizResult: bestResult
-        }));
+
+    this.setState({phase: 'result_fetch'}, () => {
+      fetch(`/api/result/${quizId}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({answers})})
+          .then(response => response.json())
+          .then(bestResult => this.setState({
+            phase: 'results',
+            quizResult: bestResult
+          }))
+          .catch(error => {
+            this.setState({phase: 'result_error', error})
+          });
+    });
   }
 
   render() {
@@ -46,6 +51,7 @@ class QuizSession extends React.Component {
           </Button>
         </Link>
       </>}
+      {phase === 'result_fetch' && <p>Fetching result...</p>}
     </>
   }
 }
