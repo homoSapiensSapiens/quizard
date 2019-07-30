@@ -33,7 +33,7 @@ class QuizList extends React.Component {
       error ? <p>An error: {error.toString()}</p> :
     quizList.map(q => (
       <div key={q.quizID}>
-        <Link to={`/quiz/${q.quizID}`}>
+        <Link to={`/quiz/${q.quizID}`} style={{ textDecoration: 'none'}}>
           <Card>
             <CardActionArea>
               <h1>{q.title}</h1>
