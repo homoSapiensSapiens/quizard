@@ -48,14 +48,14 @@ class App extends React.Component {
           </AppBar>
 
           <Route path='/' exact component={() => <QuizList/>}/>
-          <Route path='/quiz/0' component={() => 
+          <Route path='/quiz/:id' component={({match}) => 
             <QuizSession
-            quizId={0}
-            quizElement={(onQuizCompletion) =>
-              <RemoteFetchingQuiz
-              url='/api/quiz/0'
-              onQuizCompletion={onQuizCompletion}/>
-            }
+              quizId={match.params.id}
+              quizElement={(onQuizCompletion) =>
+                <RemoteFetchingQuiz
+                url={`/api/quiz/${match.params.id}`}
+                onQuizCompletion={onQuizCompletion}/>
+              }
             />
           }/>
         </HashRouter>

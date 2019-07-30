@@ -1,6 +1,6 @@
 import React from 'react'
 import QuizResult from './QuizResult'
-import { Link, Button, CircularProgress } from '@material-ui/core';
+import { Link, Button } from '@material-ui/core';
 
 class QuizSession extends React.Component {
   constructor(props) {

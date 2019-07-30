@@ -24,7 +24,7 @@ const quiz0 = {
     ]
   }],
 
-  results: [ // TODO: indicative strings as id
+  results: [
     {
       id: 'apple',
       title: 'Apple',
@@ -54,14 +54,51 @@ const quiz0 = {
       'normal': { resultId: 'pear', operator: '-', operand: 0.5 },
       'weak': { resultId: 'apple', operator: '+', operand: 1 }
     }
-  }  
+  }
 };
 
+const quiz1 = {
+  questions: [{
+    id: 'how_calm',
+    text: 'How calm are you?',
+    answers: [
+      { id: 'very', text: 'Very calm, darling'},
+      { id: 'somewhat', text: 'Somewhat calm'},
+      { id: 'not', text: 'THIS IS THE LAST TIME YOU ASK ME SUCH A STUPID QUESTION!'},
+    ]
+  }],
+  results: [{
+    id: 'black',
+    title: 'Black',
+    description: 'Black indicate silence, calmness and control. \
+    Just like a ninja, a tire, or a raven, you are silent but deadly dangerous.\
+    Don\'t forget to be kind to some people, they deserve it.'
+  }, {
+    id: 'red',
+    title: 'Red',
+    description: 'Red indicate boldness, dynamism, and anger upon the sinners. \
+    Just like a red dress, a stop sign, or Coca Cola, you are drawing attention to yourself by all means.\
+    Be careful with when you are choosing to make dramas, as sometimes it is better to be Blue or Green'
+  }],
+  effects: {
+    how_calm: {
+      very: { resultId: 'black', operator: '+', operand: 3 },
+      somewhat: { resultId: 'black', operator: '+', operand: 1 },
+      not: { resultId: 'red', operator: '+', operand: 5 }
+    }
+  }
+};
+
+// TODO: move ID title and description to quiz object.
 const quizList = [
   {
     quizID: 0,
     title: 'Fruits Quiz',
     description: 'Take now a quiz and find out what fruit are you'
+  }, {
+    quizID: 1,
+    title: 'What color are you?',
+    description: 'Find out now, what color define you the best'
   }
 ];
 
@@ -70,8 +107,11 @@ exports.getQuizList = function() {
 }
 
 exports.getQuiz = function(quizId) {
-  if(quizId === '0') {
+  // TODO: check from a list/map
+  if (quizId === '0') {
     return quiz0;
+  } else if (quizId === '1'){
+    return quiz1;
   } else {
     throw new Error(`No quiz ${quizId}`)
   }

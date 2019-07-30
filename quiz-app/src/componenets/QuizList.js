@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Card, CardActionArea } from '@material-ui/core';
+import { Card, CardActionArea, Box } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class QuizList extends React.Component {
@@ -32,7 +32,7 @@ class QuizList extends React.Component {
     return loading ? <CircularProgress/> :
       error ? <p>An error: {error.toString()}</p> :
     quizList.map(q => (
-      <div key={q.quizID}>
+      <Box key={q.quizID} m={0.5}>
         <Link to={`/quiz/${q.quizID}`} style={{ textDecoration: 'none'}}>
           <Card>
             <CardActionArea>
@@ -43,7 +43,7 @@ class QuizList extends React.Component {
             </CardActionArea>
           </Card>
         </Link>
-      </div>
+      </Box>
     ));
   }
 }
