@@ -1,5 +1,4 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
 import Question from './Question'
 
 class Quiz extends React.Component {
@@ -26,14 +25,11 @@ class Quiz extends React.Component {
   }
 
   render() {
-    const questions = this.props.questions.map((q, index) =>
+    return this.props.questions.map((q, index) =>
       <Question text={q.text} answers={q.answers} key={index} id={q.id}
         onAnswerCallback={this.handleAnswer}
-      />
-    )
-    return <Container color='green'>
-      {questions}
-    </Container>
+        />
+    );
   }
 }
 

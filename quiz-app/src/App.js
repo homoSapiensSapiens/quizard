@@ -11,7 +11,7 @@ import QuizSession from './componenets/QuizSession'
 import RemoteFetchingQuiz from './componenets/RemoteFetchingQuiz';
 import QuizList from './componenets/QuizList';
 import { HashRouter, Route, Link } from 'react-router-dom';
-import { Grid, MenuItem } from '@material-ui/core';
+import { MenuItem, Container } from '@material-ui/core';
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,27 +26,20 @@ class App extends React.Component {
     };
     firebase.initializeApp(firebaseConfig);
   }
-
+  
   render() {
     return (
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-      >
-
-        <HashRouter>
-          <AppBar position="static">
-            <Toolbar>
-              <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-                <MenuItem>
-                  Main Page
-                </MenuItem>
-              </Link>
-            </Toolbar>
-          </AppBar>
-
+      <HashRouter>
+        <AppBar position="static">
+          <Toolbar>
+            <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+              <MenuItem>
+                Main Page
+              </MenuItem>
+            </Link>
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth='sm' justify='center'>
           <Route path='/' exact component={() => <QuizList/>}/>
           <Route path='/quiz/:id' component={({match}) => 
             <QuizSession
@@ -56,11 +49,10 @@ class App extends React.Component {
                 url={`/api/quiz/${match.params.id}`}
                 onQuizCompletion={onQuizCompletion}/>
               }
-            />
-          }/>
-        </HashRouter>
-      </Grid>
-    );
+          />}/>
+        </Container>
+      </HashRouter>
+      );
+    }
   }
-}
-export default App;
+  export default App;
