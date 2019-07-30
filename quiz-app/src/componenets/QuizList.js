@@ -26,23 +26,24 @@ class QuizList extends React.Component {
       });
   }
 
-  // TODO: fetch list from server
   render() {
     const { quizList, loading, error } = this.state;
 
     return loading ? <CircularProgress/> :
       error ? <p>An error: {error.toString()}</p> :
     quizList.map(q => (
-      <Link to={`/quiz/${q.quizID}`}>
-      <Card>
-        <CardActionArea>
-          <h1>{q.title}</h1>
-          <p>
-            {q.description}
-          </p>
-        </CardActionArea>
-      </Card>
-    </Link>
+      <div key={q.quizID}>
+        <Link to={`/quiz/${q.quizID}`}>
+          <Card>
+            <CardActionArea>
+              <h1>{q.title}</h1>
+              <p>
+                {q.description}
+              </p>
+            </CardActionArea>
+          </Card>
+        </Link>
+      </div>
     ));
   }
 }
