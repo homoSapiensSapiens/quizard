@@ -22,7 +22,7 @@ app.get('/api/quiz/:quizId', (req, res) => {
   const { quizId } = req.params;
   try {
     res.status(200).send(dataSource.getQuiz(quizId).questions);
-  } catch {
+  } catch (Error) {
     // TODO: Analyze error and return 500 in case of internal error
     res.status(404).send({error: 'Quiz was not found'});
   }
@@ -33,7 +33,7 @@ app.post('/api/result/:quizId', (req, res) => {
   var quiz;
   try {
     quiz = dataSource.getQuiz(quizId);
-  } catch {
+  } catch (Error) {
     res.status(404).send({error: 'Quiz was not found'});
     return;
   }
