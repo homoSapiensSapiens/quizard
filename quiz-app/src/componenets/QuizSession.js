@@ -1,5 +1,6 @@
 import React from 'react'
 import QuizResult from './QuizResult'
+import { Link, Button } from '@material-ui/core';
 
 class QuizSession extends React.Component {
   constructor(props) {
@@ -37,7 +38,14 @@ class QuizSession extends React.Component {
     const { quizElement } = this.props;
     return <>
       {quizElement(this.handleQuizCompleted)}
-      {phase === 'results' && <QuizResult result={quizResult} />}
+      {phase === 'results' && <>
+        <QuizResult result={quizResult} />
+        <Link href='/'>
+          <Button>
+            Back to main page
+          </Button>
+        </Link>
+      </>}
     </>
   }
 }
