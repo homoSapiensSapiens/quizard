@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const dataSource = require('./dataSource');
-
+const lodash = require('lodash');
 
 app.use(bodyParser.json());
 
@@ -14,26 +14,34 @@ const operationLambdas = {
 }
 
 
-app.get('/api/quiz', (req, res) => {
-  res.status(200).send(dataSource.getQuizList());
+app.get('/api/quiz', async (req, res) => {
+  try {
+    res.status(200).send(await dataSource.getQuizList());
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
 })
 
-app.get('/api/quiz/:quizId', (req, res) => {
+app.get('/api/quiz/:quizId', async (req, res) => {
   const { quizId } = req.params;
   try {
-    res.status(200).send(dataSource.getQuiz(quizId).questions);
-  } catch (Error) {
+    const quiz = await dataSource.getQuiz(quizId);
+    res.status(200).send(quiz.questions);
+  } catch (error) {
     // TODO: Analyze error and return 500 in case of internal error
+    console.log(error);
     res.status(404).send({error: 'Quiz was not found'});
   }
 })
 
-app.post('/api/result/:quizId', (req, res) => {
+app.post('/api/result/:quizId', async (req, res) => {
   const { quizId } = req.params;
   var quiz;
   try {
-    quiz = dataSource.getQuiz(quizId);
-  } catch (Error) {
+    quiz = await dataSource.getQuiz(quizId);
+  } catch (error) {
+    console.log(error);
     res.status(404).send({error: 'Quiz was not found'});
     return;
   }
