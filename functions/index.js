@@ -8,12 +8,6 @@ const lodash = require('lodash');
 app.use(bodyParser.json());
 
 
-const operationLambdas = {
-  '+': (a, b) => a + b,
-  '-': (a, b) => a - b
-}
-
-
 app.get('/api/quiz', async (req, res) => {
   try {
     res.status(200).send(await dataSource.getQuizList());
@@ -58,10 +52,9 @@ app.post('/api/result/:quizId', async (req, res) => {
   for (var questionID in answers) {
     const answerID = answers[questionID];
     // TODO: enable multiple effects
-    const { resultId, operator, operand } = effects[questionID][answerID];
+    const { resultId, factor } = effects[questionID][answerID];
     const oldScore = idToScore[resultId] || 0;
-    const operation = operationLambdas[operator];
-    idToScore[resultId] = operation(oldScore, operand);
+    idToScore[resultId] = oldScore + factor;
   }
 
   const bestResultId = Object.keys(idToScore).reduce(
