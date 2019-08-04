@@ -52,8 +52,11 @@ class Question extends React.Component {
         <TextField label='answer' placeholder='Color'
           value={a} key={i}
           onChange={e => this.handleAnswerChange(i, e.target.value)}/>)
+        .concat(
+          <TextField value='' key={answers.length} label='answer' placeholder='Add an answer'
+          onChange={e => this.handleAnswerAdd(e.target.value)} />
+        )
       }
-      <Button onClick={() => this.handleAnswerAdd('')}>Add answer</Button>
     </div>
   }
 }
