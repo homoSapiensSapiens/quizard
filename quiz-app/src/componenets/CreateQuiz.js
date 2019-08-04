@@ -5,36 +5,34 @@ import { TextField, Button, Box, Paper } from '@material-ui/core';
 
 class Question extends React.Component {
 
-  makeChange = changeFunc => {
+  updateValue = updateSpec => {
     this.props.onChange({
       target: {
-        value: changeFunc(this.props.value)
+        value: update(this.props.value, updateSpec)
       }
     });
   }
 
   handleChangeFor = field => e => {
     const newText = e.target.value;
-    this.makeChange(value => update(value, {
+    this.updateValue({
       [field]: {$set: newText}
-    }));
+    });
   }
 
   handleAnswerChange = (index, text) => {
-    this.makeChange(value => update(value, {
-        answers: {
-          [index]: {$set: text}
-        }
-    }));
+    this.updateValue({
+      answers: {
+        [index]: {$set: text}
+      }
+    });
   }
 
   handleAnswerAdd = (text) => {
-    this.makeChange(value => 
-      update(value, {
-        answers: ans => 
-          update((ans || []), {$push: [text]})
-      })
-    );
+    this.updateValue({
+      answers: ans => 
+        update((ans || []), {$push: [text]})
+    });
   }
 
   render() {
