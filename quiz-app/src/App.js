@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import QuizSession from './componenets/QuizSession'
 import RemoteFetchingQuiz from './componenets/RemoteFetchingQuiz';
 import QuizList from './componenets/QuizList';
+import CreateQuiz from './componenets/CreateQuiz';
 import { HashRouter, Route, Link } from 'react-router-dom';
 import { MenuItem, Container } from '@material-ui/core';
 
@@ -37,6 +38,11 @@ class App extends React.Component {
                 Main Page
               </MenuItem>
             </Link>
+            <Link to='/add' style={{ textDecoration: 'none', color: 'white' }}>
+              <MenuItem>
+                Add Quiz
+              </MenuItem>
+            </Link>
           </Toolbar>
         </AppBar>
         <Container maxWidth='sm' justify='center'>
@@ -50,6 +56,9 @@ class App extends React.Component {
                 onQuizCompletion={onQuizCompletion}/>
               }
           />}/>
+          <Route path='/add' component={() => 
+            <CreateQuiz />
+          } />
         </Container>
       </HashRouter>
       );
