@@ -1,7 +1,7 @@
 import React from 'react';
 import lodash from 'lodash';
 import update from 'immutability-helper';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Box, Paper } from '@material-ui/core';
 
 class Question extends React.Component {
 
@@ -100,9 +100,10 @@ class CreateQuiz extends React.Component {
         <br/><br/>
         Questions: <br/>
         {
-          questions.map((q, i) => <Question
-            key={i}
-            {...this.bindToPathProps(`quiz.questions[${i}]`)}/>)
+          questions.map((q, i) => <Box m={2} key={i}><Paper>
+              <Question
+                {...this.bindToPathProps(`quiz.questions[${i}]`)}/>
+            </Paper></Box>)
         }
         <Button onClick={() => this.setState(state => update(state, {quiz: {questions: {$push: [{}]}}}))}>
           Add a question
